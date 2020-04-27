@@ -117,25 +117,28 @@ exports.registerHandler = async (req, res, next) => {
 // @route POST /oncrises/v1/auth/login
 // @access Public
 exports.loginHandler = (req, res, next) => {
-  // passport.authenticate("local", {
-  //   successRedirect: "/oncrises/v1/",
-  //   failureRedirect: "/oncrises/v1/auth/login"
-  // })(req, res, next);
   passport.authenticate("local", (err, user, info) => {
     if(err) {
       return next(err);
     };
-    if (!user) {
-      return res.redirect("/oncrises/v1/auth/login");
-    };
-    req.logIn(user, function(err) {
-      if(err) {
-        return next(err);
-      };
-      return res.redirect("/oncrises/v1/");
-    });
+
+    if(user) {
+      req.logIn(user, function(err) {
+        if(err) {
+          return next(err);
+        };
+        console.log("\nUser successfully logged in!".green.bold);
+        return res.redirect("/oncrises/v1/");
+      });
+
+    } else {
+      console.log(`\nUser: ${req.body.user}\nError: ${info.message}`.red.bold);
+      return res.status(400).json({
+        success: false,
+        error: info.message
+      });
+    }
   })(req, res, next);
-  // console.log("User logged in".green.bold);
 };
 
 /* -------------------------------------------------*/

@@ -4,3 +4,5 @@ client/node_modules/
 client/.gitignore
 client/README.md
 panacea.txt
+seeder.js
+_data/

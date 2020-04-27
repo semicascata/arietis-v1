@@ -36,7 +36,8 @@ module.exports = (passport) => {
         .catch(err => {
           console.log(`Error on authentication: ${err}`.red.bold);
         }); // Then/Catch end
-    })); // Passport.use end
+    })
+  ); // Passport.use end
 
   // Serialize user
   passport.serializeUser((user, done) => {
