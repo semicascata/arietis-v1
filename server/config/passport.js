@@ -1,5 +1,3 @@
-// The local authentication strategy authenticates users using a Username and Password.
-// The strategy requires a verify Callback, which accepts these credentials and calls Done providing a user.
 const localStrategy = require("passport-local").Strategy;
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");

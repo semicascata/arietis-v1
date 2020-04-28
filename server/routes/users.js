@@ -1,7 +1,5 @@
 const express = require("express");
 const {
-  getLogin,
-  getRegister,
   loginHandler,
   registerHandler,
   logoutSession
@@ -12,13 +10,11 @@ const router = express.Router();
 // Login
 router
   .route("/login")
-  .get(getLogin)
   .post(loginHandler);
 
 // Register
 router
   .route("/register")
-  .get(getRegister)
   .post(registerHandler);
 
 // Logout

@@ -2,12 +2,12 @@ const express = require("express");
 const {
   getWelcome
 } = require("../controllers/arietis");
-const { isAuth, authorize } = require("../middlewares/auth");
+const { isAuth } = require("../middlewares/auth");
 const router = express.Router();
 
 // Welcome Page
 router
   .route("/")
-  .get(isAuth, authorize("admin"), getWelcome);
+  .get(isAuth, getWelcome);
 
 module.exports = router;

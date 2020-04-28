@@ -5,10 +5,7 @@ exports.isAuth = async (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   } else {
-    res.status(401).json({
-      success: false,
-      msg: "Log in to access this page"
-    });
+    res.status(401).send("Log in to access this page")
   }
 };
 
@@ -20,11 +17,7 @@ exports.authorize = (...roles) => {
 
     if(!roles.includes(user.role)) {
       console.log(`User role: ${user.role}`.cyan.bold);
-      res.status(403).json({
-        success: false,
-        msg: `User role is not authorized to acess this route`
-      });
-      // res.redirect("/oncrises/v1/auth/login");
+      res.status(403).send("User role is not authorized to acess this route")
       return false;
     }
     next();

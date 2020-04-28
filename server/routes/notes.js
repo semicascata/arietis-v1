@@ -18,8 +18,8 @@ router
 // Single Note
 router
   .route("/:id")
-  .get(getNote)
-  .put(isAuth, updateNote)
-  .delete(isAuth, deleteNote);
+  .get(isAuth, getNote)
+  .put(isAuth, authorize("admin"), updateNote)
+  .delete(isAuth, authorize("admin"), deleteNote);
 
 module.exports = router;

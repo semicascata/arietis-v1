@@ -1,124 +1,121 @@
 const Note = require("../models/Note");
-const User = require("../models/User");
+// const User = require("../models/User");
 
-/* -------------------------------------------------*/
 // @desc Notes Page
 // @route GET /oncrises/v1/notes
 // @acess Private
 exports.getNotes = async (req, res, next) => {
   const notes = await Note.find({});
-  // const sessionId = req.session.passport.user;
-  // const user = await User.findById({_id: sessionId});
 
-  if(!notes) {
-    res.status(404).json({
-      success: false,
-      msg: "Cannot find any note"
-    });
-    console.log("There is no notes, check database...".cyan.bold);
-  };
-  
-  res.send(notes);
-  // res.status(200).json({
-  //   success: true,
-  //   numberOfNotes: `${notes.length}`,
-  //   data: notes
-  // });
+  if (!notes || notes.length === 0) {
+    console.log("Something goes wrong, cannot send any data...".red.bold);
+
+    res.status(404).send(notes);
+
+  } else if (notes) {
+    console.log(`\nSuccessfully got all notes!
+      Total of notes: ${notes.length}`.green.bold);
+
+    res.status(200).send(notes);
+
+  }
 };
 
-/* -------------------------------------------------*/
 // @desc Single Note
 // @route GET /oncrises/v1/notes/:id
 // @acess Private
 exports.getNote = async (req, res, next) => {
-  const note = await Note.findById(req.params.id);
+  const noteId = req.params.id;
 
-  if(!note) {
-    res.status(404).json({
-      success: false,
-      msg: `Cannot find any note by the Id ${req.params.id}`
-    });
+  try {
+    const note = await Note.findById(noteId);
 
-  } else if(note) {
-    res.status(200).json({
-      success: true,
-      note
-    });
-  };
+    if (!note) {
+      console.log(`Cannot find any note by the Id \"${noteId}\"`);
+
+      res.status(404).send({});
+
+    } else if (note) {
+      res.status(200).send(note);
+
+    };
+
+  } catch(err) {
+    console.log(`Cannot find any note by the Id \"${noteId}\"`.red.bold);
+    res.status(404).send(`Cannot find any note by the Id \"${noteId}\"`);
+    return false;
+  }
 };
 
-/* -------------------------------------------------*/
 // @desc Create New Note
 // @route POST /oncrises/v1/notes/
 // @acess Private
 exports.createNote = async (req, res, next) => {
-  const user = req.body.user;
-  const { title, text } = req.body;
+  const {
+    title,
+    text
+  } = req.body;
 
   let notesErr = [];
 
   // Validations
-  if(title === null || title == "") {
+  if (title === null || title == "") {
     notesErr.push({
       msg: "Please, insert a note title"
     });
   };
 
-  if(text === null || title == "") {
+  if (text === null || title == "") {
     notesErr.push({
       msg: "Please, insert a text"
     });
   };
 
-  if(text.length > 1000) {
+  if (text.length > 1000) {
     notesErr.push({
       msg: "Text can have max 1000 characters, sorry..."
     });
   };
 
-  if(notesErr.length > 0) {
-    res.status(401).json({
-      success: false,
-      user: user.user,
-      notesErr
-    });
+  if (notesErr.length > 0) {
+    console.log(`${notesErr}`.red.bold);
+
+    res.status(401).send(notesErr);
 
   } else {
-    await Note.findOne({ title })
-    .then(note => {
-      if(note) {
-        notesErr.push({
-          msg: `The title of ${note.title} already exists on Notes list`
-        });
-
-      } else {
-        const newNote = new Note({
-          title,
-          text
-        });
-
-        newNote.save()
-        .then(tip => {
-          console.log(`New note ${newNote.title} successfully created and stored on database!`.green.bold);
-          res.status(200).json({
-            success: true,
-            msg: `New note ${newNote.title} created and stored on database`,
-            newNote
+    await Note.findOne({
+        title
+      })
+      .then(note => {
+        if (note) {
+          notesErr.push({
+            msg: `The title of \"${note.title}\" already exists on Notes list`
           });
-        })
-        .catch(err => {
-          console.log("Something goes wrong when trying to save this note...".red.bold);
-          res.status(404).json({
-            success: false,
-            msg: "Something goes wrong when trying to save this note..."
-          }); // res end
-        }); // Catch end
-      }
-    });
+
+        } else {
+          const newNote = new Note({
+            title,
+            text
+          });
+
+          newNote.save()
+            .then(tip => {
+              console.log(`New note \"${newNote.title}\" successfully created and stored on database!`.green.bold);
+
+              res.status(200).send(`New note \"${newNote.title}\" successfully created and stored on database!`);
+
+            })
+            .catch(err => {
+              console.log("Something goes wrong when trying to save this note...".red.bold);
+
+              res.status(404).send("Something goes wrong when trying to save this note...");
+
+            });
+        }
+      });
   }
 };
 
-/* -------------------------------------------------*/
 // @desc Update Note
 // @route PUT /oncrises/v1/notes/:id
 // @acess Private
@@ -126,11 +123,11 @@ exports.updateNote = async (req, res, next) => {
   const noteId = req.params.id;
   let note = await Note.findById(noteId);
 
-  if(!note) {
-    res.status(404).json({
-      success: false,
-      msg: `Note not found with Id of ${noteId}`
-    });
+  if (!note) {
+    console.log(`Note not found with Id of \"${noteId}\"`);
+
+    res.status(404).send(`Note not found with Id of \"${noteId}\"`);
+
     return false;
   };
 
@@ -139,15 +136,11 @@ exports.updateNote = async (req, res, next) => {
     runValidators: true
   });
 
-  console.log(`\nNote with Id ${noteId} updated successfully!`.green.bold);
+  console.log(`\nNote with Id \"${noteId}\" updated successfully!`.green.bold);
 
-  res.status(200).json({
-    success: true,
-    note
-  });
+  res.status(200).send(`Note \"${note.title}\" updated!`);
 };
 
-/* -------------------------------------------------*/
 // @desc Delete Note
 // @route DELETE /oncrises/v1/notes/:id
 // @acess Private
@@ -155,19 +148,15 @@ exports.deleteNote = async (req, res, next) => {
   const noteId = req.params.id;
   const note = await Note.findById(noteId);
 
-  if(!note) {
-    res.status(404).json({
-      success: false,
-      msg: `Note not found with Id of ${noteId}`
-    });
-  } else if(note) {
+  if (!note) {
+    console.log(`Note not found with Id of \"${noteId}\"`.red.bold);
+
+    res.status(404);
+
+  } else if (note) {
     note.remove();
-
-    res.status(200).json({
-      success: true,
-      msg: "Note successfully deleted!"
-    });
-
     console.log("\nNote deleted...".red.bold);
+
+    res.status(200).send("Note deleted");
   };
 };

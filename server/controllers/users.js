@@ -1,32 +1,6 @@
 const User = require("../models/User");
 const passport = require("passport");
 
-// @desc Login Page
-// @route GET /oncrises/v1/auth/login
-// @acess Public
-exports.getLogin = (req, res, next) => {
-  if(req.body) {
-    let user = req.body;
-    console.log(user);
-  }
-  res.status(200).json({
-    success: true,
-    msg: "This is the login page"
-  });
-};
-
-/* -------------------------------------------------*/
-// @desc Register Page
-// @route GET /oncrises/v1/auth/register
-// @acess Public
-exports.getRegister = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: "This is the register page"
-  });
-};
-
-/* -------------------------------------------------*/
 // @desc Register Handler
 // @route POST /oncrises/v1/auth/register
 // @access Public
@@ -64,10 +38,7 @@ exports.registerHandler = async (req, res, next) => {
 
   // Check errors
   if(errors.length > 0) {
-    res.status(401).json({
-      success: false,
-      errors: errors
-    });
+    res.status(401).send(errors);
 
   } else {
     // If 0 errors, check if the user already exists
@@ -76,9 +47,7 @@ exports.registerHandler = async (req, res, next) => {
       if(thatUser) {
         console.log(`User ${thatUser.user} already exists`.red.bold);
 
-        res.status(401).json({
-          msg: `User ${thatUser.user} already exists`
-        });
+        res.status(401).send(`User ${thatUser.user} already exists`);
         next();
 
       } else {
@@ -94,25 +63,18 @@ exports.registerHandler = async (req, res, next) => {
         .then(thisUser => {
           console.log(`User ${thisUser.user} saved!`.green.bold);
 
-          res.status(201).json({
-            success: true,
-            msg: `User ${thisUser.user} successfully saved on database!`
-          });
+          res.status(201).send(`User ${thisUser.user} saved!`);
         })
         .catch(err => {
           console.log(`Something goes wrong when saving user ${thisUser.user} on db...`.red.bold);
 
-          res.status(401).json({
-            success: false,
-            msg: `Something goes wrong when trying to save the user ${thisUser.user} on database. Please, try again...`
-          });
-        }); // Catch end
-      } // Else end
-    }); // User.findOne -> Then end
-  } // Else 0 errors end
+          res.status(401).send(`Something goes wrong when saving user ${thisUser.user} on db...`);
+        });
+      }
+    });
+  }
 };
 
-/* -------------------------------------------------*/
 // @desc Login Handler
 // @route POST /oncrises/v1/auth/login
 // @access Public
@@ -127,29 +89,35 @@ exports.loginHandler = (req, res, next) => {
         if(err) {
           return next(err);
         };
+
         console.log("\nUser successfully logged in!".green.bold);
-        return res.redirect("/oncrises/v1/");
+        return res.status(201).redirect("/oncrises/v1/");
       });
 
     } else {
       console.log(`\nUser: ${req.body.user}\nError: ${info.message}`.red.bold);
-      return res.status(400).json({
-        success: false,
-        error: info.message
-      });
+
+      return res.status(400).send(info.message);
     }
   })(req, res, next);
 };
 
-/* -------------------------------------------------*/
 // @desc Logout Handler
 // @route GET /oncrises/v1/auth/logout
 // @access Private
-exports.logoutSession = (req, res, next) => {
-  req.logout();
+exports.logoutSession = async (req, res, next) => {
+  let user = req.session.passport;
+
+  if(user) {
+    await req.logout();
+  };
+
+  if(!user) {
+    console.log("There is no user to log out...".yellow.bold);
+    res.status(401).send("There is no user to log out...");
+    return false;
+  }
+
   console.log("User logged out".yellow.bold);
-  res.status(201).json({
-    success: true,
-    msg: "User successfully logged out, see ya!"
-  });
+  res.status(201).send("User successfully logged out, see ya!");
 };

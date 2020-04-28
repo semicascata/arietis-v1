@@ -49,7 +49,7 @@ app.use(helmet()); // Initializing Helmet Security
 // Limit requests
 const limiter = rateLimit({
   windowsMs: 5 * 60 * 1000, // 5 mins
-  max: 50,
+  max: 20,
   message: "Too many requests, try again after 10 minutes..."
 });
 app.use(limiter);
