@@ -2,7 +2,9 @@ const express = require("express");
 const {
   getNotes,
   getNote,
-  createNote
+  createNote,
+  updateNote,
+  deleteNote
 } = require("../controllers/notes");
 const { isAuth, authorize } = require("../middlewares/auth");
 const router = express.Router();
@@ -10,12 +12,14 @@ const router = express.Router();
 // Notes Page
 router
   .route("/")
-  .get(isAuth, getNotes)
+  .get(getNotes)
   .post(isAuth, authorize("admin"), createNote);
 
 // Single Note
 router
   .route("/:id")
-  .get(isAuth, getNote);
+  .get(getNote)
+  .put(isAuth, updateNote)
+  .delete(isAuth, deleteNote);
 
 module.exports = router;

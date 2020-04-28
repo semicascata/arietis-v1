@@ -7,8 +7,8 @@ const User = require("../models/User");
 // @acess Private
 exports.getNotes = async (req, res, next) => {
   const notes = await Note.find({});
-  const sessionId = req.session.passport.user;
-  const user = await User.findById({_id: sessionId});
+  // const sessionId = req.session.passport.user;
+  // const user = await User.findById({_id: sessionId});
 
   if(!notes) {
     res.status(404).json({
@@ -20,7 +20,7 @@ exports.getNotes = async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    user: user.user,
+    numberOfNotes: `${notes.length}`,
     data: notes
   });
 };
@@ -118,3 +118,55 @@ exports.createNote = async (req, res, next) => {
 };
 
 /* -------------------------------------------------*/
+// @desc Update Note
+// @route PUT /oncrises/v1/notes/:id
+// @acess Private
+exports.updateNote = async (req, res, next) => {
+  const noteId = req.params.id;
+  let note = await Note.findById(noteId);
+
+  if(!note) {
+    res.status(404).json({
+      success: false,
+      msg: `Note not found with Id of ${noteId}`
+    });
+    return false;
+  };
+
+  note = await Note.findByIdAndUpdate(noteId, req.body, {
+    new: true,
+    runValidators: true
+  });
+
+  console.log(`\nNote with Id ${noteId} updated successfully!`.green.bold);
+
+  res.status(200).json({
+    success: true,
+    note
+  });
+};
+
+/* -------------------------------------------------*/
+// @desc Delete Note
+// @route DELETE /oncrises/v1/notes/:id
+// @acess Private
+exports.deleteNote = async (req, res, next) => {
+  const noteId = req.params.id;
+  const note = await Note.findById(noteId);
+
+  if(!note) {
+    res.status(404).json({
+      success: false,
+      msg: `Note not found with Id of ${noteId}`
+    });
+  } else if(note) {
+    note.remove();
+
+    res.status(200).json({
+      success: true,
+      msg: "Note successfully deleted!"
+    });
+
+    console.log("\nNote deleted...".red.bold);
+  };
+};

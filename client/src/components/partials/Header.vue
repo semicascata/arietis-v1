@@ -4,15 +4,15 @@
     <div class="ui container">
 
       <div class="ui secondary inverted menu">
-        <a href="#" class="ui inverted button" style="margin-right: 10px;">
+        <router-link to="/login" class="ui inverted button" style="margin-right: 10px;">
           Log In <i class="fas fa-sign-in-alt"></i>
-        </a>
-        <a href="#" class="ui inverted button">
+        </router-link>
+        <router-link to="register" class="ui inverted button">
           Sign Up <i class="fas fa-user-plus"></i>
-        </a>
-        
+        </router-link>
+
         <div class="right item">
-          <a href="#" class="item coolFont">Contact</a>
+          <router-link to="/contact" class="item coolFont">Contact</router-link>
         </div>
       </div>
     </div>
