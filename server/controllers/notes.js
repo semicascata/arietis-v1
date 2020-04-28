@@ -17,12 +17,13 @@ exports.getNotes = async (req, res, next) => {
     });
     console.log("There is no notes, check database...".cyan.bold);
   };
-
-  res.status(200).json({
-    success: true,
-    numberOfNotes: `${notes.length}`,
-    data: notes
-  });
+  
+  res.send(notes);
+  // res.status(200).json({
+  //   success: true,
+  //   numberOfNotes: `${notes.length}`,
+  //   data: notes
+  // });
 };
 
 /* -------------------------------------------------*/

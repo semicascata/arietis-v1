@@ -7,8 +7,7 @@
         <h3>Login <i class="fas fa-sign-in-alt"></i></h3>
         <br>
       </div>
-      <!-- POST request to Log in a User  -->
-      <form action="login" method="POST" class="ui form">
+      <form class="ui form">
         <div class="ui segment">
           <!-- Flash Messages -->
           <div class="field">
@@ -42,7 +41,7 @@
 </div>
 </template>
 
-<script>
+<script scoped>
 export default {
   name: "Login"
 }

@@ -2,8 +2,6 @@
 <div class="authPage">
 
   <h3>New Member <i class="user plus icon"></i></h3>
-  <form action="register" method="POST">
-    <!-- Registering Process POST Request -->
     <div class="ui segment">
       <!-- Flash Messages -->
       <div class="ui form">
@@ -38,7 +36,6 @@
         <button class="ui fluid submit button" type="submit">Register</button>
       </div>
     </div>
-  </form>
 
   <div class="backButtom">
     <div class="ui fluid inverted secondary item menu">
