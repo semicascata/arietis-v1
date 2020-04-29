@@ -9,11 +9,8 @@
   >
     <div class="column">
       <div class="ui raised segment">
-        <router-link to="#" class="ui red ribbon label"> {{note.title}} </router-link>
+        <a @click="singleNote(note._id)" class="ui red ribbon label"> {{note.title}} </a>
         <p> {{note.text}} </p>
-        <div class="ui link list">
-        </div>
-
       </div>
     </div>
   </div>
@@ -28,22 +25,26 @@ export default {
   data() {
     return {
       notes: [],
-      error: "",
-      text: ""
+      errors: ""
     };
   },
   async created() {
     try {
       this.notes = await NotesService.getNotes();
-    } catch (err) {
-      this.error = err;
+    } catch(err) {
+      this.$router.push("/");
+      this.errors = err;
+    }
+  },
+  methods: {
+    singleNote(id) {
+      this.$router.push("/notes/" + id);
     }
   }
 }
 </script>
 
 <style scoped>
-/* Notes Page */
 .allNotes {
   width: 480px;
   margin: 50px auto 80px;
@@ -58,22 +59,5 @@ export default {
   font-family: 'Slabo 27px', serif;
   text-align: justify;
   padding: 14px;
-}
-
-.ui.column.grid span {
-  font-family: 'Bree Serif', serif;
-  font-size: 0.9rem;
-  text-align: center;
-  padding: 0 14px;
-}
-
-.ui.link.list .item {
-  font-size: 0.8rem;
-}
-
-.ui.link.list {
-  width: 50px;
-  margin-top: 2px;
-  padding: 0 14px 10px;
 }
 </style>

@@ -7,7 +7,7 @@
         <router-link to="/login" v-if="loggedUser.length === 0" class="ui inverted button" style="margin-right: 10px;">
           Log In <i class="fas fa-sign-in-alt"></i>
         </router-link>
-        <router-link to="register" v-if="loggedUser.length === 0" class="ui inverted button">
+        <router-link to="/register" v-if="loggedUser.length === 0" class="ui inverted button">
           Sign Up <i class="fas fa-user-plus"></i>
         </router-link>
 

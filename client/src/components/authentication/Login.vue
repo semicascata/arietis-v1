@@ -26,7 +26,7 @@
         </div>
       </form>
       <div class="ui message">
-        New member? <router-link to="register">Sign Up</router-link>
+        New member? <router-link to="/register">Sign Up</router-link>
       </div>
       <div class="backButtom">
         <div class="ui fluid inverted secondary item menu">
@@ -70,12 +70,6 @@ export default {
 </script>
 
 <style scoped>
-/* Register/Login Page */
-.backButtom {
-  width: 100px;
-  margin: 5px auto 60px;
-}
-
 .authPage {
   font-family: 'Bree Serif', serif;
   text-align: center;
@@ -91,6 +85,11 @@ export default {
   font-family: 'Bree Serif', serif;
   color: #faf4ff;
   font-size: 2.5rem;
+}
+
+.backButtom {
+  width: 100px;
+  margin: 5px auto 60px;
 }
 
 .coolFont {

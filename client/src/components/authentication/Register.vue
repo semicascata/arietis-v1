@@ -69,12 +69,10 @@ export default {
         password: this.password,
         password2: this.password2
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         this.$router.push("/login");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         this.$router.push("/register");
       });
     }
@@ -83,12 +81,6 @@ export default {
 </script>
 
 <style scoped>
-/* Register/Login Page */
-.backButtom {
-  width: 100px;
-  margin: 5px auto 60px;
-}
-
 .authPage {
   font-family: 'Bree Serif', serif;
   text-align: center;
@@ -104,6 +96,11 @@ export default {
   font-family: 'Bree Serif', serif;
   color: #faf4ff;
   font-size: 2.5rem;
+}
+
+.backButtom {
+  width: 100px;
+  margin: 5px auto 60px;
 }
 
 .coolFont {

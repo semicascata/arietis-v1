@@ -31,11 +31,13 @@ exports.getNote = async (req, res, next) => {
     const note = await Note.findById(noteId);
 
     if (!note) {
-      console.log(`Cannot find any note by the Id \"${noteId}\"`);
+      console.log(`Cannot find any note by the Id \"${noteId}\"`.red.bold);
 
       res.status(404).send({});
 
     } else if (note) {
+      console.log(`Note with Id of ${noteId} found!
+        Note title: ${note.title}`.green.bold);
       res.status(200).send(note);
 
     };
