@@ -7,19 +7,19 @@
         <h3>Login <i class="fas fa-sign-in-alt"></i></h3>
         <br>
       </div>
-      <form class="ui form">
+      <form @submit.prevent="login" class="ui form">
         <div class="ui segment">
           <!-- Flash Messages -->
           <div class="field">
             <div class="ui left icon input">
               <i class="user icon"></i>
-              <input type="text" name="username" placeholder="Username">
+              <input type="text" name="username" placeholder="Username" v-model="user">
             </div>
           </div>
           <div class="field">
             <div class="ui left icon input">
               <i class="lock icon"></i>
-              <input type="password" name="password" placeholder="Password">
+              <input type="password" name="password" placeholder="Password" v-model="password">
             </div>
           </div>
           <button class="ui fluid large submit button" type="submit">Login</button>
@@ -41,9 +41,31 @@
 </div>
 </template>
 
-<script scoped>
+<script>
+import axios from "axios";
+
 export default {
-  name: "Login"
+  name: "Login",
+  data() {
+    return {
+      user: "",
+      password: ""
+    }
+  },
+  methods: {
+    async login() {
+      await axios.post("oncrises/v1/auth/login", {
+        user: this.user,
+        password: this.password
+      })
+      .then(() => {
+        return window.location.href = "/notes";
+      })
+      .catch(() => {
+        this.$router.push("/login");
+      });
+    }
+  }
 }
 </script>
 

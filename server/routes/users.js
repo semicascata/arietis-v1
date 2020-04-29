@@ -2,7 +2,8 @@ const express = require("express");
 const {
   loginHandler,
   registerHandler,
-  logoutSession
+  logoutSession,
+  getUser
 } = require("../controllers/users");
 
 const router = express.Router();
@@ -21,5 +22,10 @@ router
 router
   .route("/logout")
   .get(logoutSession);
+
+// User
+router
+  .route("/user")
+  .get(getUser);
 
 module.exports = router;

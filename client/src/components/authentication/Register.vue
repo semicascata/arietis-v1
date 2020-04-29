@@ -4,37 +4,37 @@
   <h3>New Member <i class="user plus icon"></i></h3>
     <div class="ui segment">
       <!-- Flash Messages -->
-      <div class="ui form">
+      <form @submit.prevent="register" class="ui form">
         <!-- Username Input -->
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input type="text" name="username" placeholder="Username">
+            <input type="text" name="username" placeholder="Username" v-model="user">
           </div>
         </div>
         <!-- Email Input -->
         <div class="field">
           <div class="ui left icon input">
             <i class="envelope icon"></i>
-            <input type="email" name="email" placeholder="Email">
+            <input type="email" name="email" placeholder="Email" v-model="email">
           </div>
         </div>
         <!-- Password Input -->
         <div class="field">
           <div class="ui left icon input">
             <i class="lock icon"></i>
-            <input type="password" name="password" placeholder="Create Password">
+            <input type="password" name="password" placeholder="Create Password" v-model="password">
           </div>
         </div>
         <!-- Confirm Password Input -->
         <div class="field">
           <div class="ui left icon input">
             <i class="lock icon"></i>
-            <input type="password" name="password2" placeholder="Confirm Password">
+            <input type="password" name="password2" placeholder="Confirm Password" v-model="password2">
           </div>
         </div>
         <button class="ui fluid submit button" type="submit">Register</button>
-      </div>
+      </form>
     </div>
 
   <div class="backButtom">
@@ -49,8 +49,36 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "Register"
+  name: "Register",
+  data() {
+    return {
+      user: "",
+      email: "",
+      password: "",
+      password2: ""
+    }
+  },
+  methods: {
+    async register() {
+      await axios.post("oncrises/v1/auth/register", {
+        user: this.user,
+        email: this.email,
+        password: this.password,
+        password2: this.password2
+      })
+      .then((res) => {
+        console.log(res);
+        this.$router.push("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        this.$router.push("/register");
+      });
+    }
+  }
 }
 </script>
 

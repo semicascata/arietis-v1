@@ -38,6 +38,7 @@ exports.registerHandler = async (req, res, next) => {
 
   // Check errors
   if(errors.length > 0) {
+    console.log(errors);
     res.status(401).send(errors);
 
   } else {
@@ -91,7 +92,7 @@ exports.loginHandler = (req, res, next) => {
         };
 
         console.log("\nUser successfully logged in!".green.bold);
-        return res.status(201).redirect("/oncrises/v1/");
+        return res.status(201).send("User logged in!");
       });
 
     } else {
@@ -120,4 +121,22 @@ exports.logoutSession = async (req, res, next) => {
 
   console.log("User logged out".yellow.bold);
   res.status(201).send("User successfully logged out, see ya!");
+};
+
+// @desc Current user
+// @route GET /oncrises/v1/auth/user
+// @access Public
+exports.getUser = async (req, res, next) => {
+  const userId = await req.session.passport;
+  // const isEmpty = userId;
+  // console.log(Object.keys(isEmpty).length);
+
+  if(!userId) {
+    res.status(401).send("No user logged in...");
+    console.log(`${userId}`.red.bold);
+  } else if(userId) {
+    const user = await User.findOne({_id: userId.user});
+    res.status(200).send(user.user);
+    console.log(`${user.user}`.cyan.bold);
+  };
 };
