@@ -12,13 +12,13 @@ const router = express.Router();
 // Notes Page
 router
   .route("/")
-  .get(getNotes)
+  .get(isAuth, getNotes)
   .post(isAuth, authorize("admin"), createNote);
 
 // Single Note
 router
   .route("/:id")
-  .get(isAuth, getNote)
+  .get(isAuth, authorize("admin"), getNote)
   .put(isAuth, authorize("admin"), updateNote)
   .delete(isAuth, authorize("admin"), deleteNote);
 

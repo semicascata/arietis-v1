@@ -131,10 +131,11 @@ exports.getUser = async (req, res, next) => {
   // const isEmpty = userId;
   // console.log(Object.keys(isEmpty).length);
 
-  if(!userId) {
+  if(!userId || userId.user == undefined) {
     res.status(401).send("No user logged in...");
     console.log(`${userId}`.red.bold);
-  } else if(userId) {
+
+  } else if(userId || userId.user.length > 0) {
     const user = await User.findOne({_id: userId.user});
     res.status(200).send(user.user);
     console.log(`${user.user}`.cyan.bold);

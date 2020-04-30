@@ -32,7 +32,7 @@ export default {
     try {
       this.notes = await NotesService.getNotes();
     } catch(err) {
-      this.$router.push("/");
+      this.$router.push("/login");
       this.errors = err;
     }
   },

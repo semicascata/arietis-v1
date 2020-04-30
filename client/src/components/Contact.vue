@@ -1,16 +1,6 @@
 <template>
 <div class="contactPage">
 
-  <!--
-  <div class="backButtomCont">
-    <div class="ui fluid secondary inverted item menu">
-      <a href="javascript:history.back();" class="item coolFont">
-        <i class="angle left icon"></i> Back
-      </a>
-    </div>
-  </div>
--->
-
   <div class="fakeBody">
     <div class="typeWriter">
       <h4 class="textWriter">Contact me.</h4>

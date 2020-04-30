@@ -11,18 +11,17 @@
           Sign Up <i class="fas fa-user-plus"></i>
         </router-link>
 
-        <div class="left item">
-          <div v-if="loggedUser.length > 0" class="ui dropdown" id="dropdown">
+        <div v-if="loggedUser.length > 0" class="left item">
+          <div class="coolFont">
             <i class="user icon"></i>
             {{ loggedUser }}
-            <i class="dropdown icon"></i>
-            <div class="menu">
-              <a href="/aurigae/v1/auth/logout" class="item">Logout</a>
-            </div>
           </div>
+          <a href="#" @click="logout()" class="item coolFont">Logout</a>
         </div>
 
         <div class="right item">
+          <router-link to="/" class="item coolFont">Home</router-link>
+          <router-link to="/notes" class="item coolFont">Notes</router-link>
           <router-link to="/contact" class="item coolFont">Contact</router-link>
         </div>
       </div>
@@ -54,18 +53,20 @@ export default {
       console.log(err);
     }
   },
-  logout() {
-
-  },
-  mounted: function() {
-    // Semantic UI Dropdown on Home Page
-    this.$('#dropdown').dropdown();
+  methods: {
+    async logout() {
+      await axios.get("/oncrises/v1/auth/logout")
+      .then((res) => {
+        console.log(res);
+        return window.location.href = "/login";
+      })
+      .catch(err => console.log(err));
+    }
   }
 };
 </script>
 
 <style scoped>
-/* Navbar */
 .mainNavbar {
   width: 880px;
   margin: 14px auto 15px;
@@ -83,7 +84,11 @@ export default {
   width: 110px;
 }
 
-.contactButtom {
+.left.item .item {
+  margin-left: 10px;
+}
+
+.coolFont {
   font-family: 'Bree Serif', serif;
 }
 </style>
