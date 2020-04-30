@@ -18,7 +18,7 @@ router
 // Single Note
 router
   .route("/:id")
-  .get(isAuth, authorize("admin"), getNote)
+  .get(isAuth, getNote)
   .put(isAuth, authorize("admin"), updateNote)
   .delete(isAuth, authorize("admin"), deleteNote);
 

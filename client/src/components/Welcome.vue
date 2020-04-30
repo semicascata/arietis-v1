@@ -10,7 +10,7 @@
   </div>
 
   <div class="postParallax">
-    <h3>Post Parallax</h3>
+    <h3>Immutable</h3>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eros in cursus turpis massa tincidunt. Leo vel fringilla est ullamcorper eget. Arcu cursus vitae congue mauris rhoncus
       aenean vel elit. Amet mauris commodo quis imperdiet massa tincidunt nunc pulvinar sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eros in cursus turpis massa
@@ -52,7 +52,7 @@ h1 {
   width: 100%;
   height: 300px;
   /* Parallax Scrolling */
-  background-image: url("../assets/images/pathologic2.jpg");
+  background-image: url("../assets/images/pathologic.png");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;

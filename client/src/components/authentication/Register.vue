@@ -72,7 +72,8 @@ export default {
       .then(() => {
         this.$router.push("/login");
       })
-      .catch(() => {
+      .catch((err) => {
+        alert(err);
         this.$router.push("/register");
       });
     }

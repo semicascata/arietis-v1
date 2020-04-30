@@ -7,13 +7,13 @@ const Note = require("../models/Note");
 exports.getNotes = async (req, res, next) => {
   const notes = await Note.find({});
 
-  if (!notes || notes.length === 0) {
+  if (!notes) {
     console.log("Something goes wrong, cannot send any data...".red.bold);
 
     res.status(404).send(notes);
 
   } else if (notes) {
-    console.log(`\nSuccessfully got all notes!
+    console.log(`\nSuccessfully got notes!
       Total of notes: ${notes.length}`.green.bold);
 
     res.status(200).send(notes);
@@ -82,13 +82,15 @@ exports.createNote = async (req, res, next) => {
   if (notesErr.length > 0) {
     console.log(`${notesErr}`.red.bold);
 
-    res.status(401).send(notesErr);
+    res.status(404).send(notesErr);
 
   } else {
     await Note.findOne({
         title
       })
       .then(note => {
+        console.log(`${notesErr}`.cyan.bold);
+
         if (note) {
           notesErr.push({
             msg: `The title of \"${note.title}\" already exists on Notes list`
@@ -159,6 +161,6 @@ exports.deleteNote = async (req, res, next) => {
     note.remove();
     console.log("\nNote deleted...".red.bold);
 
-    res.status(200).send("Note deleted");
+    res.status(204).send("Note deleted");
   };
 };

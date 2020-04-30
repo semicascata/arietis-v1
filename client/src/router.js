@@ -6,6 +6,7 @@ import Register from "./components/authentication/Register.vue";
 import Login from "./components/authentication/Login.vue";
 import Notes from "./components/notes/Notes.vue";
 import Note from "./components/notes/Note.vue";
+import NewNote from "./components/notes/NewNote.vue";
 
 Vue.use(Router);
 
@@ -17,6 +18,7 @@ export default new Router({
     { path: "/register", name: "register", component: Register },
     { path: "/login", name: "login", component: Login },
     { path: "/notes", name: "notes", component: Notes },
+    { path: "/newnote", name: "newnote", component: NewNote },
     { path: "/notes/:id", name: "note", component: Note, props: true }
   ]
 });

@@ -1,5 +1,18 @@
 <template>
 <div class="allNotes">
+
+  <div class="notesTitle">
+    <h3>
+      "We live in the Tower,<br />
+      and they crawl in the Earth.<br />
+      They're drawn to animals,<br />
+      and we reach for the stars."
+    </h3>
+    <div class="notesImg">
+      <img src="../../assets/images/dogheads.png" alt="Dogheads">
+    </div>
+  </div>
+
   <div
   class="ui column grid"
   v-for="(note, index) in notes"
@@ -46,7 +59,7 @@ export default {
 
 <style scoped>
 .allNotes {
-  width: 480px;
+  width: 500px;
   margin: 50px auto 80px;
 }
 
@@ -58,6 +71,27 @@ export default {
 .ui.column.grid p {
   font-family: 'Slabo 27px', serif;
   text-align: justify;
+  word-wrap: break-word;
   padding: 14px;
+}
+
+.notesTitle {
+  margin: 20px auto 15px;
+  text-align: center;
+}
+
+.notesTitle h3 {
+  font-family: 'Pacifico', cursive;
+  color: #eb4559;
+  font-size: 1.8rem;
+}
+
+.notesImg {
+  margin: 40px auto 40px;
+  text-align: center;
+}
+
+.notesImg img {
+  width: 260px;
 }
 </style>

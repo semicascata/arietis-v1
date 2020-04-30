@@ -61,7 +61,8 @@ export default {
       .then(() => {
         return window.location.href = "/notes";
       })
-      .catch(() => {
+      .catch((err) => {
+        alert(err);
         this.$router.push("/login");
       });
     }

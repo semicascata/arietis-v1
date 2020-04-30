@@ -4,19 +4,22 @@
     <div class="ui container">
 
       <div class="ui secondary inverted menu">
-        <router-link to="/login" v-if="loggedUser.length === 0" class="ui inverted button" style="margin-right: 10px;">
-          Log In <i class="fas fa-sign-in-alt"></i>
-        </router-link>
-        <router-link to="/register" v-if="loggedUser.length === 0" class="ui inverted button">
-          Sign Up <i class="fas fa-user-plus"></i>
-        </router-link>
+        <div v-if="loggedUser.length === 0" class="left item">
+          <router-link to="/login"  class="ui inverted button" style="margin-right: 10px;">
+            Log In <i class="fas fa-sign-in-alt"></i>
+          </router-link>
+          <router-link to="/register" class="ui inverted button">
+            Sign Up <i class="fas fa-user-plus"></i>
+          </router-link>
+        </div>
 
         <div v-if="loggedUser.length > 0" class="left item">
-          <div class="coolFont">
+          <div class="coolFont userName">
             <i class="user icon"></i>
             {{ loggedUser }}
           </div>
           <a href="#" @click="logout()" class="item coolFont">Logout</a>
+          <router-link v-if="loggedUser === 'Admin'" to="/newnote" class="item coolFont">Create</router-link>
         </div>
 
         <div class="right item">
@@ -56,11 +59,11 @@ export default {
   methods: {
     async logout() {
       await axios.get("/oncrises/v1/auth/logout")
-      .then((res) => {
-        console.log(res);
-        return window.location.href = "/login";
-      })
-      .catch(err => console.log(err));
+        .then((res) => {
+          console.log(res);
+          return window.location.href = "/login";
+        })
+        .catch(err => console.log(err));
     }
   }
 };
@@ -85,10 +88,14 @@ export default {
 }
 
 .left.item .item {
-  margin-left: 10px;
+  margin-left: 2px;
 }
 
 .coolFont {
   font-family: 'Bree Serif', serif;
+}
+
+.userName {
+  margin-right: 10px;
 }
 </style>
