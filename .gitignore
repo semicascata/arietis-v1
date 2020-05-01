@@ -2,6 +2,7 @@ node_modules/
 client/node_modules/
 client/.gitignore
 client/README.md
+server/config/config.env
 panacea.txt
 seeder.js
 _data/
