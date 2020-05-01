@@ -1,5 +1,4 @@
 node_modules/
-server/config/config.env
 client/node_modules/
 client/.gitignore
 client/README.md
