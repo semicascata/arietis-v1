@@ -1,7 +1,10 @@
 <template>
-<div class="ui container">
+<div class="ui container title">
   <div class="ui inverted column">
     <h1>ARIETIS - O. C.</h1>
+    <p>
+      Aenean vel elit
+    </p>
   </div>
 
   <div class="introLax">
@@ -33,6 +36,12 @@ export default {
   margin: 0 auto;
 }
 
+.ui.inverted.column p {
+  font-family: 'Pacifico', cursive;
+  color: #faf4ff;
+  font-size: 2rem;
+}
+
 .ui.inverted.column {
   text-align: center;
 }
@@ -41,7 +50,7 @@ h1 {
   font-family: 'Bree Serif', serif;
   color: #eb4559;
   font-size: 6rem;
-  margin: 80px auto;
+  margin: 80px auto 30px;
 }
 
 .introLax {
