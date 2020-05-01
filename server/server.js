@@ -13,7 +13,7 @@ const { connectDB } = require("./config/db");
 const port = process.env.PORT || 3000;
 
 // Config env
-require("dotenv").config({ path: "server/config/config.env" });
+require("dotenv").config({ path: `${__dirname}/config/config.env` });
 
 const app = express();
 
